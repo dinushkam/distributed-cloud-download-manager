@@ -1,24 +1,24 @@
 from fastapi import FastAPI
 
-from app.api.health import router as health_router
-from app.api.workers import router as workers_router
-from app.api.downloads import router as downloads_router
+from backend.manager.app.api.router import api_router
+from backend.shared.config.settings import settings
+from backend.manager.app.core.logging import logger
 
 app = FastAPI(
-    title="Distributed Download Manager",
+    title=settings.APP_NAME,
     version="1.0.0",
-    description="Manager Service"
+    description="Distributed Cloud Download Manager API"
 )
 
 
-@app.get("/")
-def root():
-    return {
-        "service": "Distributed Download Manager",
-        "status": "running"
-    }
+@app.on_event("startup")
+async def startup():
+    logger.info("Manager API started")
 
 
-app.include_router(health_router)
-app.include_router(workers_router)
-app.include_router(downloads_router)
+@app.on_event("shutdown")
+async def shutdown():
+    logger.info("Manager API stopped")
+
+
+app.include_router(api_router)

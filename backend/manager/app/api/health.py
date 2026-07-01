@@ -4,8 +4,9 @@ router = APIRouter(tags=["Health"])
 
 
 @router.get("/health")
-def health():
+async def health_check():
     return {
         "status": "healthy",
-        "service": "Manager"
+        "service": "Distributed Download Manager",
+        "version": "1.0.0"
     }
