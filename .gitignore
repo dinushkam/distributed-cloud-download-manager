@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+
+# Virtual Environment
+venv/
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Linux
+*.swp
+
+# Logs
+*.log
+
+# Docker
+*.pid
+
+# Python cache
+.pytest_cache/
+
+# Coverage
+.coverage
+
+# Build
+dist/
+build/
+
+# Node
+node_modules/
+
+# React
+frontend/build/
+
+# AWS
+*.pem
+credentials.json
+
+# Database
+*.db
