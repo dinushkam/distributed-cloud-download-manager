@@ -1,9 +1,6 @@
 from fastapi import APIRouter
 
-router = APIRouter(
-    prefix="/workers",
-    tags=["Workers"]
-)
+router = APIRouter(prefix="/workers", tags=["Workers"])
 
 workers = {}
 

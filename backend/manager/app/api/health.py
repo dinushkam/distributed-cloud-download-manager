@@ -8,5 +8,5 @@ async def health_check():
     return {
         "status": "healthy",
         "service": "Distributed Download Manager",
-        "version": "1.0.0"
+        "version": "1.0.0",
     }
