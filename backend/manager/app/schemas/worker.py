@@ -10,6 +10,12 @@ class WorkerRegister(BaseModel):
     port: int
 
 
+class WorkerHeartbeat(BaseModel):
+    cpu_usage: int
+    memory_usage: int
+    current_jobs: int
+
+
 class WorkerResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

@@ -1,18 +1,20 @@
 from logging.config import fileConfig
 
 from alembic import context
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import create_engine, pool
 
 from backend.manager.app.db.base import Base
-
-# Import all models here
-from backend.manager.app.models import *  # noqa: F403
+from backend.manager.app.models import Chunk, Download, Worker
 from backend.shared.config.settings import settings
+
+# Keep these imports so Alembic detects both models.
+_ = (Worker, Download, Chunk)
 
 config = context.config
 
 # Use DATABASE_URL from .env
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
+
+config.set_main_option("sqlalchemy.url", settings.DATABASE_URL.replace("%", "%%"))
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
@@ -34,11 +36,11 @@ def run_migrations_offline() -> None:
 
 
 def run_migrations_online() -> None:
-    configuration = config.get_section(config.config_ini_section)
-    connectable = engine_from_config(
-        configuration,
-        prefix="sqlalchemy.",
+
+    connectable = create_engine(
+        settings.DATABASE_URL,
         poolclass=pool.NullPool,
+        pool_pre_ping=True,
     )
 
     with connectable.connect() as connection:
